@@ -1,0 +1,78 @@
+<%- include('partials/header.ejs') %>
+
+<h1>HOla</h1>
+
+<div class="container">
+    <% if(locals.catPic){ %>
+    <div class="cat-pic">
+        <img class="cat-pic" src="<%= catPic %>" alt="cat-pic">
+    </div>
+    <% } else if(locals.error){ %>
+        <div id="tag-error" class="tag-error">
+            <%=error%>
+        </div>
+    <%}%>
+    
+    <div class="book-search">
+
+        <form action="/add-book" method="POST">
+            <label for="newBook">Book title:</label><br>
+            <input type="text" id="newBook" name="newBook" style="margin-bottom: 19px"><br>
+            <label for="date">Date read:</label>
+            <input type="date" id="dateInput" name="date" pattern="\d{4}-\d{2}-\d{2}" style="margin-bottom: 19px"><br>
+            
+            <textarea id="review" name="review" placeholder="Add review" class="text-input" rows="5" cols="30" style="margin-bottom: 9px"></textarea><br><br>
+            <div class="rate">
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="text">5 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="text">4 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="text">3 stars</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="text">2 stars</label>
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="text">1 star</label>
+              </div>
+            
+            <input type="submit" style="margin-bottom: 15px">
+        </form>
+    </div>
+
+
+    <h2>My books</h2>
+    <div class="sortBy" style="margin-bottom: 10px">
+        <h3>Sort by:</h3>
+        <form method="post">
+            <input type="submit" formaction="/newest" value="newest">
+            <input type="submit" formaction="/best" value="best">
+        </form>
+
+    </div>
+
+    <div class="mainBooks">
+        <% if(locals.books){ %>
+            <% for(let i = 0; i < books.length; i ++){ %>
+        <div class="books1">
+            <h3 class="bookTitle"><%= books[i].title %></h3>
+            <img class="coverImg" src="<%= books[i].cover %>" alt="">
+            
+            <p>Author: <%= books[i].author %></p>
+            <p>Date read: <%= books[i].date %></p>
+            <p>Rating: <%= books[i].rate %></p>
+            <p><%= books[i].review %></p>
+            <form method="post" >
+                <input id="edit" type="submit" value="edit" formaction="/edit/<%= books[i].id %>">
+                <input id="delete" type="submit" value="delete" formaction="/delete/<%= books[i].id %>">
+            </form>
+        </div>
+            <% } %>
+        <% } %>
+    </div>
+
+</div>
+
+
+
+
+<%- include('partials/footer.ejs') %>

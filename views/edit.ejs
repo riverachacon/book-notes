@@ -1,0 +1,10 @@
+<%- include("partials/header.ejs") %>
+
+<div class="edit-review">
+    <form action="/update/<%= data[0].id %>" method="post">
+        <textarea name="reviewUpdate" cols="30" rows="5"><%= data[0].review %></textarea>
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
